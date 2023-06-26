@@ -146,7 +146,7 @@ def generate_sequence_example(video_id: str,
   return seq_example
 
 
-def main():
+def main(argv):
   # reads the input csv.
   input_csv = pd.read_csv(FLAGS.csv_path)
   if FLAGS.num_shards == -1:
@@ -163,6 +163,7 @@ def main():
 
   if FLAGS.shuffle_csv:
     input_csv = input_csv.sample(frac=1)
+  print(input_csv)
   with _close_on_exit(writers) as writers:
     for i in tqdm(range(len(input_csv))):
       print(

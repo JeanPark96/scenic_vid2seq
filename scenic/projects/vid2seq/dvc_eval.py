@@ -436,6 +436,7 @@ def evaluate_dense_captions(predicted_segments,
         for j, _ in enumerate(ps)
     ]
     predicted_captions_res.append(res)
+  print(predicted_captions_res)
   for i, gs in enumerate(gt_captions):
     res = [gt_captions_tok[keys[i] + '_' + str(j)][0] for j, _ in enumerate(gs)]
     gt_captions_res.append(res)
@@ -453,42 +454,48 @@ def evaluate_dense_captions(predicted_segments,
           str(k): preds[str(threshold)][key + '_' + str(k)]
           for k in vid2isx[str(threshold)][key]
       }
-
-  # Compute dense video captioning metrics at the video level
+  segments = []
   for i, key in enumerate(keys):
     pred_filt_i = {str(t): final_preds[str(t)][key] for t in iou_thresholds}
-    gt_filt_i = {str(t): final_gts[str(t)][key] for t in iou_thresholds}
-    res = evaluate_single_dense_captions(
-        predicted_segments[i],
-        gt_segments[i],
-        pred_filt_i,
-        gt_filt_i,
-        predicted_captions_res[i],
-        gt_captions_res[i],
-        splits[i],
-        key,
-        iou_thresholds,
-        soda,
-        tmponly,
-        scorers,
-    )
-    for met in res:
-      metric_tiou[met].append(res[met])
-    if soda:
-      if 'SODA_c_1' not in res:
-        metric_tiou['SODA_c_1'].append(-1)
-      if 'SODA_c_2' not in res:
-        metric_tiou['SODA_c_2'].append(-1)
+    print(predicted_segments[i])
+    print(pred_filt_i)
+  return segments
+  # Compute dense video captioning metrics at the video level
+  # for i, key in enumerate(keys):
+  #   pred_filt_i = {str(t): final_preds[str(t)][key] for t in iou_thresholds}
+  #   gt_filt_i = {str(t): final_gts[str(t)][key] for t in iou_thresholds}
+  #   res = evaluate_single_dense_captions(
+  #       predicted_segments[i],
+  #       gt_segments[i],
+  #       pred_filt_i,
+  #       gt_filt_i,
+  #       predicted_captions_res[i],
+  #       gt_captions_res[i],
+  #       splits[i],
+  #       key,
+  #       iou_thresholds,
+  #       soda,
+  #       tmponly,
+  #       scorers,
+  #   )
+  #   for met in res:
+  #     metric_tiou[met].append(res[met])
+  #   if soda:
+  #     if 'SODA_c_1' not in res:
+  #       metric_tiou['SODA_c_1'].append(-1)
+  #     if 'SODA_c_2' not in res:
+  #       metric_tiou['SODA_c_2'].append(-1)
 
-  logging.info('Closing Meteor')
-  with scorers['METEOR'].lock:
-    scorers['METEOR'].meteor_p.stdin.close()
-    scorers['METEOR'].meteor_p.stdout.close()
-    scorers['METEOR'].meteor_p.kill()
-    scorers['METEOR'].meteor_p.wait()
-  del scorers
+  # logging.info('Closing Meteor')
+  # with scorers['METEOR'].lock:
+  #   scorers['METEOR'].meteor_p.stdin.close()
+  #   scorers['METEOR'].meteor_p.stdout.close()
+  #   scorers['METEOR'].meteor_p.kill()
+  #   scorers['METEOR'].meteor_p.wait()
+  # del scorers
 
-  return metric_tiou
+  # return metric_tiou
+
 
 
 def evaluate_single_dense_captions(predicted_segments,

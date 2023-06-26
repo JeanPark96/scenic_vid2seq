@@ -15,8 +15,8 @@ from scenic.model_lib.base_models import model_utils as base_model_utils
 from scenic.projects.baselines import vit
 from scenic.projects.t5 import layers as t5_model
 from scenic.projects.t5 import model as t5_pretrained
-from t5x import decoding
-from t5x.models import DecodeFnCallable
+from scenic.projects.t5.t5x  import decoding
+from scenic.projects.t5.t5x.models import DecodeFnCallable
 
 
 beam_search = decoding.beam_search
