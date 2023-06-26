@@ -631,6 +631,7 @@ def eval_and_log_summary_no_metric(
     para,
     t,
     is_split,
+    output_dir,
     output_file_name
     ):
   """Eval the model and write the summary."""
@@ -776,8 +777,10 @@ def eval_and_log_summary_no_metric(
 
   predicted_captions = [eval_packs[x]['pred'] for x in keys]
   predicted_segments = [eval_packs[x]['pred_timestamps'] for x in keys]
-  output_dir_path = "/home/hlpark/shared/REDUCE/models/scenic/scenic/projects/vid2seq/zero_shot_eval/output_summary"
-  file_w = open(os.path.join(output_dir_path, output_file_name + ".txt"), "w")
+  if not os.path.exists(output_dir):
+    os.makedirs(output_dir)
+    print(f"create {output_dir}")
+  file_w = open(os.path.join(output_dir, output_file_name + ".txt"), "w")
   lines = []
   for x in keys:
     print(f"{eval_packs[x]['pred']} {eval_packs[x]['pred_timestamps']}")
@@ -1336,6 +1339,7 @@ def eval_only(
         para='para' in ds_name,
         t=1000000.,  # 1 FPS
         is_split=config.dataset_configs.split,
+        output_dir=config.output_dir,
         output_file_name=config.output_file_name)
 
   # Return the train and eval summary after last step.

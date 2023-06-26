@@ -14,7 +14,8 @@ def get_config(runlocal=''):
   config.runlocal = runlocal
   config.experiment_name = 'zero_shot_eval'
 
-  config.output_file_name = 'orgclip_mask_laptop'
+  config.output_file_name = 'test' #output file name
+  config.output_dir = '/home/hlpark/REDUCE/scenic_vid2seq/scenic/projects/vid2seq/zero_shot_eval/output_summary' #add full path for saving output file
 
   config.count_flops = False  # if runlocal else ml_collections.ConfigDict({'count_flops': True})
 
@@ -40,10 +41,10 @@ def get_config(runlocal=''):
 
   config.data_dtype_str = 'float32'
 
-  config.dataset_configs.base_dir = '/home/hlpark/shared/REDUCE/models/scenic/scenic/projects/vid2seq/zero_shot_eval'
+  config.dataset_configs.base_dir = '/home/hlpark/REDUCE/scenic_vid2seq/scenic/projects/vid2seq/zero_shot_eval' #add zero_shot_eval folder path
   config.dataset_configs.tables = {
       'train': 'train.tfrecord.sst@1',
-      'validation': 'orgclip_mask_laptop.tfrecord.sst@1',
+      'validation': 'orgclip.tfrecord.sst@1', #add (evaluation file name must be csv_file_name@1)
   }
   config.dataset_configs.examples_per_subset = {
       'train': 0,
@@ -128,8 +129,8 @@ def get_config(runlocal=''):
   config.init_from = ml_collections.ConfigDict()
   # Replace with your checkpoint pretrained on YT-temporal-1bn, assuming it has
   # been trained for 200K iterations
-  config.init_from.checkpoint_path = '/home/hlpark/scenic/scenic/projects/vid2seq/zero_shot_eval'
-  config.init_from.model_config = 'path_to_yt_temporal_1bn_config'
+  config.init_from.checkpoint_path = '/home/hlpark/REDUCE/scenic_vid2seq/scenic/projects/vid2seq/zero_shot_eval' #add checkpoint folder path
+  config.init_from.model_config = 'checkpoint_anet' #add
   config.init_from.step = 0
 
   config.init_from.encoder = ml_collections.ConfigDict()
