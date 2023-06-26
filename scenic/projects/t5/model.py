@@ -27,7 +27,7 @@ tokenizer.indices_to_string([int(x) for x in np.argmax(output[0], -1)])
 ```
 """
 from scenic.projects.t5 import layers
-from t5x import checkpoints
+from scenic.projects.t5.t5x import checkpoints
 
 # TODO(phseo): Implement beam search for general encoder-decoder models.
 

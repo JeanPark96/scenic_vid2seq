@@ -6,10 +6,10 @@ import flax.linen as nn
 import jax
 import jax.numpy as jnp
 from scenic.model_lib.base_models import base_model
-from t5x import decoding
-from t5x.examples.t5 import layers as t5_layers
-from t5x.examples.t5 import network as t5
-from t5x.models import DecodeFnCallable
+from scenic.projects.t5.t5x import decoding
+from scenic.projects.t5.t5x.examples.t5 import layers as t5_layers
+from scenic.projects.t5.t5x.examples.t5 import network as t5
+from scenic.projects.t5.t5x.models import DecodeFnCallable
 
 beam_search = decoding.beam_search
 temperature_sample = decoding.temperature_sample
